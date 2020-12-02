@@ -1,6 +1,9 @@
 import urllib.request
 from bs4 import BeautifulSoup
 import codecs
+#import argparse
+
+#class ArgParser:
 
 class Html:
     
@@ -35,6 +38,11 @@ class File:
         for item in self.titles:
             file.write(item+"\n")
         file.close()
+        
+def printTitles(titles):
+    
+    for item in titles:
+        print(item)
         
 html = Html()
 titles = []
