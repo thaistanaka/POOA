@@ -1,10 +1,8 @@
 import urllib.request
 from bs4 import BeautifulSoup
 import codecs
-#import argparse
-
-#class ArgParser:
-
+import argparse
+ 
 class Html:
     
     def __init__(self,siteUrl="https://g1.globo.com/"):
@@ -15,7 +13,7 @@ class Html:
         htmlString = f.read().decode("utf8")
         f.close()
         return htmlString
-    
+
 class ParserHtml:
     
     def getTitles(self,htmlString):
@@ -29,7 +27,7 @@ class ParserHtmlG1(ParserHtml):
 
 class File:
     
-    def __init__(self,titles,filename = "test.csv"):
+    def __init__(self,titles,filename="test.csv"):
         self.filename = filename
         self.titles = titles
     
@@ -39,15 +37,32 @@ class File:
             file.write(item+"\n")
         file.close()
         
+def argParser(listArgs):
+    parser = argparse.ArgumentParser()
+    for arg in listArgs:
+        parser.add_argument("--"+arg)
+    return parser.parse_args()
+        
 def printTitles(titles):
-    
     for item in titles:
         print(item)
         
-html = Html()
+listArgs = ["siteUrl","filename"]
+args = argParser(listArgs)
 titles = []
+
+if args.siteUrl is None:
+    html = Html()
+else:
+    html = Html(args.siteUrl)
+
 if html.siteUrl == "https://g1.globo.com/":
     titlesG1 = ParserHtmlG1()
     titles.extend(titlesG1.getTitles(html.getHtml()))
-    fileCsv = File(titles)
+    if args.filename is None:
+        fileCsv = File(titles)
+    else:
+        fileCsv = File(titles,args.filename)
     fileCsv.writeFile()
+else:
+    print("URL não é do G1")
