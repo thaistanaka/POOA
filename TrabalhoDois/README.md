@@ -9,4 +9,4 @@ Alunas: Thaís Oyamada Tanaka e Gabrielle Scaranello Faria
 [urllib.request](https://docs.python.org/3/library/urllib.request.html)\
 [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)\
 [codecs](https://docs.python.org/3/library/codecs.html)\
-[argparse](https://docs.python.org/3/library/argparse.html)\
+[argparse](https://docs.python.org/3/library/argparse.html)
