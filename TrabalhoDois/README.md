@@ -5,7 +5,7 @@ Alunas: Thaís Oyamada Tanaka e Gabrielle Scaranello Faria
 
 ## Instalar Python e bibliotecas
 
-[Python 3](https://www.python.org/downloads/)\
+[Python 3](https://www.python.org/downloads/)
 
 em Ubuntu:
 ```console
