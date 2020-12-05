@@ -18,9 +18,6 @@ class ParserHtml:
     
     def getTitles(self,htmlString):
         pass
-    
-    def getUrls(self,htmlString):
-        pass
 
 class ParserHtmlG1(ParserHtml):
     
@@ -31,6 +28,16 @@ class ParserHtmlG1(ParserHtml):
     def getUrls(self,htmlString):
         htmlParsed = BeautifulSoup(htmlString,'html.parser')
         return [item['href'] for item in htmlParsed.find_all("a",class_="feed-post-link",href=True)]
+    
+class ParserHtmlUol(ParserHtml):
+    
+    def getTitles(self,htmlString):
+        htmlParsed = BeautifulSoup(htmlString,'html.parser')
+        titles = []
+        titles.extend([item.get_text() for item in htmlParsed.find_all("h1",class_="titulo")])
+        titles.extend([item.get_text() for item in htmlParsed.find_all("h2",class_="titulo color2 ")])
+        titles.extend([item.get_text() for item in htmlParsed.find_all("h2",class_="titulo color2")])
+        return titles
 
 class File:
     
@@ -71,5 +78,11 @@ if html.siteUrl == "https://g1.globo.com/":
     else:
         fileCsv = File(titles,args.filename)
         fileCsv.writeFile()
-else:
-    print("URL não é do G1")
+elif html.siteUrl == "https://www.uol.com.br/":
+    titlesUol = ParserHtmlUol()
+    titles.extend(titlesUol.getTitles(html.getHtml()))
+    if args.filename is None:
+        printTitles(titles)
+    else:
+        fileCsv = File(titles,args.filename)
+        fileCsv.writeFile()
