@@ -20,21 +20,26 @@ sudo apt install python3-pip
 
 ## Como executar
 
-python3 noticias.py [--siteUrl SITEURL] [--filename FILENAME]\
+python3 noticias.py [--siteUrl SITEURL] [--filename FILENAME] [--htmlname HTMLNAME] [--classname CLASSNAME]\
 \
 --siteUrl é um argumento opcional com valor default: "https://g1.globo.com/", é a URL do site de notícias.\
 --filename é um argumento opcional com o nome do arquivo que será criado com os títulos de notícias. Caso este argumento não seja passado, os títulos serão impressos na tela.\
+--htmlname é um argumento opcional com nome da estrutura html em que será buscado o titulo da notícia. Exemplo: p, a, h1. Apenas usado quando a URL do argumento --siteUrl não é da UOL ou do G1.\
+--classname é um argumento opcional com nome da classe em que será buscado o titulo da notícia. Apenas usado quando a URL do argumento --siteUrl não é da UOL ou do G1.\
 
 python3 noticias.py --help
 ```console
 usage: noticias.py [-h] [--siteUrl SITEURL] [--filename FILENAME]
+                   [--htmlname HTMLNAME] [--classname CLASSNAME]
 
 optional arguments:
-  -h, --help           show this help message and exit
+  -h, --help            show this help message and exit
   --siteUrl SITEURL
   --filename FILENAME
+  --htmlname HTMLNAME
+  --classname CLASSNAME
 ```
 
 ## Como incluir um novo site de notícias
 
-Para incluir um novo site de notícias, basta passar a URL do novo site no argumento --siteUrl. Para processar as notícias de um novo site, é preciso criar uma nova classe ParserHtmlNovoSite() no diretório ParserHtml e extrair as informações com o uso da biblioteca BeautifulSoup, assim como nas classes do G1 e do UOL. A implementação dessas classes de processamento foi baseada no design pattern Strategy.
+Para incluir um novo site de notícias, basta passar a URL do novo site no argumento --siteUrl junto com os argumentos --htmlname e --classname. Estes dois últimos argumentos podem ser encontrados inspecionando o html do site de notícias. Para incluir um algoritmo para processar as notícias extraídas, basta utilizar a classe parserHtml no diretório ParserHtml para ter acesso as informações do site. A implementação dessas classes de processamento foi baseada no design pattern Strategy.
