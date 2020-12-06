@@ -1,62 +1,25 @@
-import urllib.request
-from bs4 import BeautifulSoup
-import codecs
+#o que pode ser passado pela linha de comando:
+# OPCIONAIS
+    # SITEURL = site em que será buscada as noticias, tem como padrão o G1
+        # por exemplo, https://www.globo.com/
+
+    # FILENAME = nome em que o arquivo csv será salvo, tem como
+    # padrão o nome "news-ANO-MES-DIA-HORA-MINUTO.csv"
+        # por exemplo, noticia.csv
 import argparse
- 
-class Html:
-    
-    def __init__(self,siteUrl="https://g1.globo.com/"):
-        self.siteUrl = siteUrl
-        
-    def getHtml(self):
-        f = urllib.request.urlopen(self.siteUrl)
-        htmlString = f.read().decode("utf8")
-        f.close()
-        return htmlString
+from ParserHtml.parserHtmlG1 import ParserHtmlG1
+from ParserHtml.parserHtmlUol import ParserHtmlUol
+from file import File
+from htmlSite import HtmlSite
 
-class ParserHtml:
-    
-    def getTitles(self,htmlString):
-        pass
-
-class ParserHtmlG1(ParserHtml):
-    
-    def getTitles(self,htmlString):
-        htmlParsed = BeautifulSoup(htmlString,'html.parser')
-        return [item.get_text() for item in htmlParsed.find_all("a",class_="feed-post-link")]
-    
-    def getUrls(self,htmlString):
-        htmlParsed = BeautifulSoup(htmlString,'html.parser')
-        return [item['href'] for item in htmlParsed.find_all("a",class_="feed-post-link",href=True)]
-    
-class ParserHtmlUol(ParserHtml):
-    
-    def getTitles(self,htmlString):
-        htmlParsed = BeautifulSoup(htmlString,'html.parser')
-        titles = []
-        titles.extend([item.get_text() for item in htmlParsed.find_all("h1",class_="titulo")])
-        titles.extend([item.get_text() for item in htmlParsed.find_all("h2",class_="titulo color2 ")])
-        titles.extend([item.get_text() for item in htmlParsed.find_all("h2",class_="titulo color2")])
-        return titles
-
-class File:
-    
-    def __init__(self,titles,filename="test.csv"):
-        self.filename = filename
-        self.titles = titles
-    
-    def writeFile(self):
-        file = codecs.open(self.filename,"w",encoding='utf-8')
-        for item in self.titles:
-            file.write(item+"\n")
-        file.close()
-        
+# função que organiza os argumentos passados por linha de comando       
 def argParser(listArgs):
     parser = argparse.ArgumentParser()
     for arg in listArgs:
         parser.add_argument("--"+arg)
     return parser.parse_args()
-        
+
+# função que imprime os titulos das noticias        
 def printTitles(titles):
     for item in titles:
         print(item)
@@ -65,15 +28,18 @@ listArgs = ["siteUrl","filename"]
 args = argParser(listArgs)
 titles = []
 
+# caso a URL não seja passada, default: G1
 if args.siteUrl is None:
-    html = Html()
+    html = HtmlSite()
 else:
-    html = Html(args.siteUrl)
+    html = HtmlSite(args.siteUrl)
 
 if html.siteUrl == "https://g1.globo.com/":
     titlesG1 = ParserHtmlG1()
+    # retorna os titulos das noticias
     titles.extend(titlesG1.getTitles(html.getHtml()))
     if args.filename is None:
+        # caso não tenha sido passado nome de arquivo, imprime os titulos na tela
         printTitles(titles)
     else:
         fileCsv = File(titles,args.filename)
@@ -86,3 +52,6 @@ elif html.siteUrl == "https://www.uol.com.br/":
     else:
         fileCsv = File(titles,args.filename)
         fileCsv.writeFile()
+else:
+    print("Site de notícias não suportado pela ferramenta!")
+    print("Crie uma classe parserHtml nova usando BeautifulSoup para processar as notícias.")

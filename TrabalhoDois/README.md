@@ -27,4 +27,4 @@ python3 noticias.py [--siteUrl SITEURL] [--filename FILENAME]\
 
 ## Como incluir um novo site de notícias
 
-Para incluir um novo site de notícias, basta passar a URL do novo site no argumento --siteUrl. Para processar as notícias de um novo site, é preciso criar uma nova classe ParserHtmlNovoSite() e extrair as informações com o uso da biblioteca BeautifulSoup. 
+Para incluir um novo site de notícias, basta passar a URL do novo site no argumento --siteUrl. Para processar as notícias de um novo site, é preciso criar uma nova classe ParserHtmlNovoSite() no diretório ParserHtml e extrair as informações com o uso da biblioteca BeautifulSoup, assim como nos exemplos do G1 e do UOL. A implementação dessas classes de processamento foi baseada no design pattern Strategy.
