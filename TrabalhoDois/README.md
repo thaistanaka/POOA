@@ -25,7 +25,7 @@ python3 noticias.py [--siteUrl SITEURL] [--filename FILENAME] [--htmlname HTMLNA
 --siteUrl é um argumento opcional com valor default: "https://g1.globo.com/", é a URL do site de notícias.\
 --filename é um argumento opcional com o nome do arquivo que será criado com os títulos de notícias. Caso este argumento não seja passado, os títulos serão impressos na tela.\
 --htmlname é um argumento opcional com nome da estrutura html em que será buscado o titulo da notícia. Exemplo: p, a, h1. Apenas usado quando a URL do argumento --siteUrl não é da UOL ou do G1.\
---classname é um argumento opcional com nome da classe em que será buscado o titulo da notícia. Apenas usado quando a URL do argumento --siteUrl não é da UOL ou do G1.\
+--classname é um argumento opcional com nome da classe em que será buscado o titulo da notícia. Apenas usado quando a URL do argumento --siteUrl não é da UOL ou do G1.
 
 python3 noticias.py --help
 ```console
