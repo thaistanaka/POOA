@@ -6,24 +6,14 @@
     # FILENAME = nome em que o arquivo csv será salvo, tem como
     # padrão o nome "news-ANO-MES-DIA-HORA-MINUTO.csv"
         # por exemplo, noticia.csv
-import argparse
 from ParserHtml.parserHtmlG1 import ParserHtmlG1
 from ParserHtml.parserHtmlUol import ParserHtmlUol
 from file import File
 from htmlSite import HtmlSite
+from argParser import argParser
+from printTitles import printTitles
 
-# função que organiza os argumentos passados por linha de comando       
-def argParser(listArgs):
-    parser = argparse.ArgumentParser()
-    for arg in listArgs:
-        parser.add_argument("--"+arg)
-    return parser.parse_args()
-
-# função que imprime os titulos das noticias        
-def printTitles(titles):
-    for item in titles:
-        print(item)
-        
+# lista de argumentos opcionais        
 listArgs = ["siteUrl","filename"]
 args = argParser(listArgs)
 titles = []
