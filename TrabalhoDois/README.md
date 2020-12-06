@@ -42,4 +42,8 @@ optional arguments:
 
 ## Como incluir um novo site de notícias
 
-Para incluir um novo site de notícias, basta passar a URL do novo site no argumento --siteUrl junto com os argumentos --htmlname e --classname. Estes dois últimos argumentos podem ser encontrados inspecionando o html do site de notícias. Para incluir um algoritmo para processar as notícias extraídas, basta utilizar a classe parserHtml no diretório ParserHtml para ter acesso as informações do site. A implementação dessas classes de processamento foi baseada no design pattern Strategy.
+Para incluir um novo site de notícias, basta passar a URL do novo site no argumento --siteUrl junto com os argumentos --htmlname e --classname. Estes dois últimos argumentos podem ser encontrados inspecionando o html do site de notícias.
+
+## Como incluir um algoritmo para processar as notícias extraídas
+
+Para incluir um algoritmo para processar as notícias extraídas, é preciso chamar a função getHtml() da classe HtmlSite para extrair o html do site de notícias. Após isso, passando o html para as classes derivadas da classe ParserHtml no diretório ParserHtml, é possível extrair dados da notícia, como título e URL, e utilizá-los para impressão na tela, salvar em arquivos. Para extrair algum outro dado, basta adicionar uma nova função na classe ParserHtml do respectivo site de notícias. A implementação dessas classes de processamento foi baseada no design pattern Strategy.
